@@ -15,6 +15,25 @@
 
 {{-- commentaire --}}
 
+@forelse ($post->comments as $comment)
 
+        <div class="card">
+            <div class="card-body">
+            <div class="font-medium text-base text-gray-800 ml-12">{{ $comment->user->name }}: {{ $comment->content}}
+            </div>
+        </div>
+            @empty
+                <div class="alert alert-info ml-12">Aucun commentaire pour cet article</div>
+    @endforelse
+    <div class="flex justify-center">
+        <form action="{{ route('comments.store', $post->id) }}" method="POST" class="flex flex-col rounded-lg p-4 wrap">
+            @csrf
+            <h2> Créer un commentaire</h2>
+            <div class="form-group mb-3">
+                <textarea placeholder= "écrivez ici....." class="form-control @error('content') is-invalid @enderror h-20" name="content" id="content" rows="5"></textarea>
+            </div>
+            <button type="submit" class="text-black hover:text-white font-bold text-xl p-3 bg-blue-100 border-white border-2 hover:bg-black duration-500 rounded-xl text-center">Commenter</button>
+        </form>
+    </div>
 
 @endsection
